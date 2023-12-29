@@ -13,4 +13,17 @@ type Weather struct {
 			Icon string `json:"icon"`
 		} `json:"condition"`
 	} `json:"current"`
+
+	Forecast struct {
+		ForecastDay []struct {
+			Hour []struct {
+				TimeEpoch int64   `json:"time_epoch"`
+				TempC     float64 `json:"temp_c"`
+				Condition struct {
+					Text string `json:"text"`
+				} `json:"condition"`
+				ChanceRain float64 `json:"chance_of_rain"`
+			} `json:"hour"`
+		} `json:"forecastday"`
+	} `json:"forecast"`
 }
