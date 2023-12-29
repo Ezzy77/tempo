@@ -26,12 +26,25 @@ var currentCmd = &cobra.Command{
 	./tempo current --location rome
 	
 	`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("current called")
+	RunE: func(cmd *cobra.Command, args []string) error {
+		locationName, err := cmd.Flags().GetString("location")
+		if err != nil {
+			fmt.Printf("error retrieving location: %s\n",
+				err.Error())
+			return err
+		}
+
+		if locationName == "" {
+			fmt.Println("showing weather forecast at your current location")
+			return nil
+		}
+		fmt.Println("showing current weather info for " + locationName)
+		return nil
 	},
 }
 
 func init() {
+	currentCmd.Flags().StringP("location", "l", "", "city name")
 	rootCmd.AddCommand(currentCmd)
 
 }
