@@ -13,9 +13,17 @@ import (
 var forecastCmd = &cobra.Command{
 	Use:   "forecast",
 	Short: "Get weather forecast",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Long: `This command allows to to get 10 days  
+	weather forecast based on the location giving 
+	as an argument. If no argument is given the default
+	forcast will be your current location.
 
+	To pass in a location, use the -l or --location
+	flag followed by the location name.
+
+	Examples:
+	./tempo forecast -f london
+	./tempo forecast --location rome
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		locationName, err := cmd.Flags().GetString("location")
