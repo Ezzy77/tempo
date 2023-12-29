@@ -5,7 +5,9 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
+	"github.com/Ezzy77/tempo/service"
 	"github.com/spf13/cobra"
 )
 
@@ -27,6 +29,7 @@ var currentCmd = &cobra.Command{
 	
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		apiKey := os.Getenv("API_KEY")
 		locationName, err := cmd.Flags().GetString("location")
 		if err != nil {
 			fmt.Printf("error retrieving location: %s\n",
@@ -35,10 +38,12 @@ var currentCmd = &cobra.Command{
 		}
 
 		if locationName == "" {
-			fmt.Println("showing weather forecast at your current location")
+			fmt.Println("Showing current weather forecast in your city")
+			service.GetCurrentWeather("london", apiKey)
 			return nil
 		}
-		fmt.Println("showing current weather info for " + locationName)
+
+		service.GetCurrentWeather(locationName, apiKey)
 		return nil
 	},
 }
