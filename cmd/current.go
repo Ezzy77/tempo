@@ -14,7 +14,7 @@ var currentCmd = &cobra.Command{
 	Use:   "current",
 	Short: "Get current weather information",
 	Long: `This command allows to to get current 
-	weather forcast based on the location giving 
+	weather forecast based on the location giving 
 	as argument. If no argument given the default
 	forcast will be your current location.
 
@@ -44,7 +44,7 @@ var currentCmd = &cobra.Command{
 }
 
 func init() {
-	currentCmd.Flags().StringP("location", "l", "", "city name")
+	currentCmd.Flags().StringP("location", "l", "", "location name")
 	rootCmd.AddCommand(currentCmd)
 
 }
