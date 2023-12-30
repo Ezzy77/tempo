@@ -15,10 +15,9 @@ import (
 var currentCmd = &cobra.Command{
 	Use:   "current",
 	Short: "Get current weather information",
-	Long: `This command allows to to get current 
+	Long: `This command allows to get current 
 	weather forecast based on the location giving 
-	as argument. If no argument given the default
-	forcast will be your current location.
+	as argument.
 
 	To pass in a location, use the -l or --location
 	flag followed by the location name.
@@ -37,12 +36,6 @@ var currentCmd = &cobra.Command{
 			return err
 		}
 
-		if locationName == "" {
-			fmt.Println("Showing current weather forecast in your city")
-			service.GetCurrentWeather("london", apiKey)
-			return nil
-		}
-
 		service.GetCurrentWeather(locationName, apiKey)
 		return nil
 	},
@@ -50,6 +43,7 @@ var currentCmd = &cobra.Command{
 
 func init() {
 	currentCmd.Flags().StringP("location", "l", "", "location name")
+	currentCmd.MarkFlagRequired("location")
 	rootCmd.AddCommand(currentCmd)
 
 }
