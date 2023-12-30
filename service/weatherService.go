@@ -53,3 +53,27 @@ func GetCurrentWeather(location string, apiKey string) {
 	// fmt.Printf("Temperature: %.2f°C\n", weather.Current.TempC)
 	// fmt.Printf("Description: %s\n", weather.Current.Condition.Text)
 }
+
+func GetForecast(location string, apiKey string) {
+	fmt.Println("This functionality has not been implemented yet due to limitation on free weather api endpoint")
+	// url := fmt.Sprintf("http://api.weatherapi.com/v1/forecast.json?key=%s&q=%s", apiKey, location)
+	// res, err := http.Get(url)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer res.Body.Close()
+	// if res.StatusCode != 200 {
+	// 	panic("weather api not available")
+	// }
+	// body, err := io.ReadAll(res.Body)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// var weather models.Weather
+	// json.Unmarshal(body, &weather)
+
+	// forecast := len(weather.Forecast.ForecastDay)
+
+	// fmt.Println("forecast lenght; ", forecast)
+
+}

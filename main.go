@@ -10,5 +10,9 @@ import (
 
 func main() {
 	godotenv.Load()
+
+	// Print the location information
+	//fmt.Printf("City: %s\nRegion: %s\nCountry: %s\nLocation: %s\n", location.City, location.Region, location.Country, location.Loc)
+
 	cmd.Execute()
 }
