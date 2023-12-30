@@ -48,32 +48,40 @@ func GetCurrentWeather(location string, apiKey string) {
 			hour.Condition.Text)
 
 	}
-
-	// fmt.Printf("Weather in %s:\n", weather.Location.Name)
-	// fmt.Printf("Temperature: %.2f°C\n", weather.Current.TempC)
-	// fmt.Printf("Description: %s\n", weather.Current.Condition.Text)
 }
 
-func GetForecast(location string, apiKey string) {
-	fmt.Println("This functionality has not been implemented yet due to limitation on free weather api endpoint")
-	// url := fmt.Sprintf("http://api.weatherapi.com/v1/forecast.json?key=%s&q=%s", apiKey, location)
-	// res, err := http.Get(url)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// defer res.Body.Close()
-	// if res.StatusCode != 200 {
-	// 	panic("weather api not available")
-	// }
-	// body, err := io.ReadAll(res.Body)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// var weather models.Weather
-	// json.Unmarshal(body, &weather)
+func GetForecastDays(location string, apiKey string, numbDays string) {
+	url := fmt.Sprintf("http://api.weatherapi.com/v1/forecast.json?key=%s&q=%s&days=%s", apiKey, location, numbDays)
+	res, err := http.Get(url)
+	if err != nil {
+		panic(err)
+	}
+	defer res.Body.Close()
+	if res.StatusCode != 200 {
+		panic("weather api not available")
+	}
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		panic(err)
+	}
+	var weather models.Weather
+	json.Unmarshal(body, &weather)
 
-	// forecast := len(weather.Forecast.ForecastDay)
+	days := weather.Forecast.ForecastDay
 
-	// fmt.Println("forecast lenght; ", forecast)
+	fmt.Print("\n\n")
+	fmt.Println("Date        Min_Temp  Max_Temp    Avr_Temp     Condition")
+
+	for _, day := range days {
+		fmt.Printf(
+			"%s     %.0fC     %.0f     %.0fC     %s\n",
+			day.Date,
+			day.Day.MinTempC,
+			day.Day.MaxTempC,
+			day.Day.AverageTempC,
+			day.Day.Condition.Text)
+
+	}
+	fmt.Print("\n\n")
 
 }

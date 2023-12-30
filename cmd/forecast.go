@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Ezzy77/tempo/internal"
 	"github.com/Ezzy77/tempo/service"
 	"github.com/spf13/cobra"
 )
@@ -25,8 +24,8 @@ var forecastCmd = &cobra.Command{
 	flag followed by the location name.
 
 	Examples:
-	./tempo forecast -f london
-	./tempo forecast --location rome
+	./tempo forecast -l london -d 
+	./tempo forecast --location rome --days 7
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		apiKey := os.Getenv("API_KEY")
@@ -37,33 +36,24 @@ var forecastCmd = &cobra.Command{
 				err.Error())
 			return err
 		}
-
-		if locationName == "" {
-			// Get the public IP address of the machine
-			ip, err := internal.GetPublicIP()
-			if err != nil {
-				fmt.Println("Error getting public IP:", err)
-				return err
-			}
-
-			// Use an IP geolocation API to get location information
-			location, err := internal.GetLocationInfo(ip)
-			if err != nil {
-				fmt.Println("Error getting location information:", err)
-				return err
-			}
-			service.GetForecast(location.City, apiKey)
-
-			return nil
+		numberOfDays, err := cmd.Flags().GetString("days")
+		if err != nil {
+			fmt.Printf("error retrieving number of days: %s\n",
+				err.Error())
+			return err
 		}
 
-		service.GetForecast(locationName, apiKey)
+		service.GetForecastDays(locationName, apiKey, numberOfDays)
 		return nil
 	},
 }
 
 func init() {
 	forecastCmd.Flags().StringP("location", "l", "", "location name")
+	forecastCmd.Flags().StringP("days", "d", "", "number of days")
+
+	forecastCmd.MarkFlagRequired("location")
+	forecastCmd.MarkFlagRequired("days")
 	rootCmd.AddCommand(forecastCmd)
 
 }
