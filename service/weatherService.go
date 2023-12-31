@@ -70,11 +70,11 @@ func GetForecastDays(location string, apiKey string, numbDays string) {
 	days := weather.Forecast.ForecastDay
 
 	fmt.Print("\n\n")
-	fmt.Println("Date        Min_Temp  Max_Temp    Avr_Temp     Condition")
+	fmt.Println("Date  Min_Temp  Max_Temp  Avr_Temp  Condition")
 
 	for _, day := range days {
 		fmt.Printf(
-			"%s     %.0fC     %.0f     %.0fC     %s\n",
+			"%s     %.0fC     %.0fC    %.0fC     %s\n",
 			day.Date,
 			day.Day.MinTempC,
 			day.Day.MaxTempC,

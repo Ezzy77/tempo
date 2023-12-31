@@ -5,11 +5,11 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 
 	"github.com/Ezzy77/tempo/service"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // forecastCmd represents the forecast command
@@ -29,8 +29,14 @@ var forecastCmd = &cobra.Command{
 	./tempo forecast --location rome --days 7
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		apiKey := os.Getenv("API_KEY")
+		//apiKey := os.Getenv("API_KEY")
 
+		apiKey := viper.GetString("key")
+		if apiKey == "" {
+			fmt.Println("API key not set. Please run 'tempo setapikey' to set your API key.")
+
+			return nil
+		}
 		locationName, err := cmd.Flags().GetString("location")
 		if err != nil {
 			fmt.Printf("error retrieving location: %s\n",

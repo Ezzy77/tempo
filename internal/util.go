@@ -2,8 +2,12 @@ package internal
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
+	"os"
+	"os/user"
+	"path/filepath"
 )
 
 // GeoLocation represents the structure of the geolocation response.
@@ -77,3 +81,35 @@ func GetLocationInfo(ip string) (GeoLocation, error) {
 
 // 	return nil
 // }
+
+func CreateViperConfigFile() {
+	// Get the current user's information
+	currentUser, err := user.Current()
+	if err != nil {
+		fmt.Println("Error getting current user HomeDir:", err)
+		return
+	}
+
+	// Specify the filename and the full path to the file in the home directory
+	filename := "tempoCLI_Config.json"
+	homeDir := currentUser.HomeDir
+	filePath := filepath.Join(homeDir, filename)
+
+	// Check if the file already exists
+	if _, err := os.Stat(filePath); os.IsNotExist(err) {
+		// File doesn't exist, create it
+		_, err := os.Create(filePath)
+		if err != nil {
+			fmt.Println("Error creating file:", err)
+			return
+		}
+		//defer file.Close()
+
+		fmt.Println("Config file to store API Key created successfully:", filePath)
+	} else if err != nil {
+		// Some other error occurred
+		fmt.Println("Error checking file status:", err)
+		return
+	}
+
+}

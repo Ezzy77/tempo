@@ -5,10 +5,10 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/Ezzy77/tempo/service"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // currentCmd represents the current command
@@ -28,7 +28,13 @@ var currentCmd = &cobra.Command{
 	
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		apiKey := os.Getenv("API_KEY")
+		//apiKey := os.Getenv("API_KEY")
+		apiKey := viper.GetString("key")
+		if apiKey == "" {
+			fmt.Println("API key not set. Please run 'tempo setapikey' to set your API key.")
+
+			return nil
+		}
 		locationName, err := cmd.Flags().GetString("location")
 		if err != nil {
 			fmt.Printf("error retrieving location: %s\n",
