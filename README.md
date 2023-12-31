@@ -42,4 +42,15 @@ After setting your API key, the key will be saved in a file in your local machin
 ```
 
 ## Examples
+# Setting your weather API key: 
 
+![Alt Text](https://github.com/Ezzy77/tempo/blob/main/images/settingapikey.png)
+
+
+# Getting current weather information of provided city: 
+
+![Alt Text](https://github.com/Ezzy77/tempo/blob/main/images/current.png)
+
+# Getting weather forecast up to 14 days: 
+
+![Alt Text](https://github.com/Ezzy77/tempo/blob/main/images/forecast.png)
